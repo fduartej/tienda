@@ -23,8 +23,10 @@ namespace apptienda.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Calculo(Calculo calc)
         {
+            _logger.LogInformation("Operacion: {0}, Operador1: {1}, Operador2: {2}", calc.Operacion, calc.Operador1, calc.Operador2);
             if (ModelState.IsValid)
             {
                 string mensaje = "";
@@ -43,7 +45,7 @@ namespace apptienda.Controllers
                 }
                 ViewData["Resultado"] = mensaje;
             }
-            return View();
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

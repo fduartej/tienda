@@ -7,9 +7,9 @@ namespace apptienda.Models
 {
     public class Calculo
     {
-        string? Operacion  { get; set; }
-        double Operador1   { get; set; }
-        double Operador2   { get; set; }
+        public string? Operacion  { get; set; }
+        public double Operador1   { get; set; }
+        public double Operador2   { get; set; }
 
         public double Calcular()
         {
