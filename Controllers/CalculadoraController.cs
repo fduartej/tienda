@@ -39,11 +39,16 @@ namespace apptienda.Controllers
                 {
                     mensaje = "No se puede dividir por cero";
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    mensaje = "Error en la operación";
+                    _logger.LogError(ex, "Error en la operación");
+                    mensaje = "Error en la operación: " + ex.Message;
                 }
                 ViewData["Resultado"] = mensaje;
+            }
+            else
+            {
+                ViewData["Resultado"] = "Datos de entrada no válidos";
             }
             return View("Index");
         }

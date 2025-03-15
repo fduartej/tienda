@@ -28,11 +28,24 @@ namespace apptienda.Controllers
         {
             if (ModelState.IsValid)
             {
-                  ViewData["Message"] = "Se registro el contacto";
+                try
+                {
+                    // Simulate saving the contact information to a database
+                    // SaveContactToDatabase(contacto);
+                    ViewData["Message"] = "Se registró el contacto";
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error al registrar el contacto");
+                    ViewData["Message"] = "Error al registrar el contacto: " + ex.Message;
+                }
+            }
+            else
+            {
+                ViewData["Message"] = "Datos de entrada no válidos";
             }
             return View("Index");
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
