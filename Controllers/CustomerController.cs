@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
+using apptienda.Models;
 
 namespace apptienda.Controllers
 {
@@ -33,10 +34,10 @@ namespace apptienda.Controllers
              _logger.LogInformation("RegistrarInfo {1}", customer);
             if (ModelState.IsValid)
             {
-                return View("Index");
+                
+                ViewData["Message"] = "Se registró los datos del cliente";
             }
             return View("Index");
-            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
