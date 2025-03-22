@@ -8,8 +8,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace apptienda.Models
 {
+    [Table("t_customer")]
     public class Customer
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string? UserName { get; set; }
         [Required(ErrorMessage = "DNI es obligatorios.")]
         public string? DNI { get; set; }
@@ -18,6 +22,5 @@ namespace apptienda.Models
         public DateTime BirthDate { get; set; }
         [Required(ErrorMessage = "Direccion es obligatorios.")]
         public string? Address { get; set; }
-
     }
 }

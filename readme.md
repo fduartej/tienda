@@ -35,3 +35,7 @@ dotnet ef database update
 ## SOLO en Caso no tengas instalado el EF
 
 dotnet tool install --global dotnet-ef
+
+## Nueva Migracion
+
+dotnet ef migrations add CustomerMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"

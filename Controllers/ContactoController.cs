@@ -35,8 +35,6 @@ namespace apptienda.Controllers
             {
                 try
                 {
-                    // Simulate saving the contact information to a database
-                    // SaveContactToDatabase(contacto);
                     _context.DbSetContactos.Add(contacto);
                     _context.SaveChanges();
                     _logger.LogInformation("Se registró el contacto");
