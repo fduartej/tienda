@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 using apptienda.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using apptienda.Data;
 
 namespace apptienda.Controllers
 {
     public class ContactoController : Controller
     {
         private readonly ILogger<ContactoController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public ContactoController(ILogger<ContactoController> logger)
+
+        public ContactoController(ILogger<ContactoController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
+
 
         public IActionResult Index()
         {
@@ -32,6 +37,9 @@ namespace apptienda.Controllers
                 {
                     // Simulate saving the contact information to a database
                     // SaveContactToDatabase(contacto);
+                    _context.DbSetContactos.Add(contacto);
+                    _context.SaveChanges();
+                    _logger.LogInformation("Se registró el contacto");
                     ViewData["Message"] = "Se registró el contacto";
                 }
                 catch (Exception ex)

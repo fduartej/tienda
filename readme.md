@@ -25,3 +25,13 @@ OPCIONAL
 dotnet tool install --global dotnet-aspnet-codegenerator --version 8.0.7
 
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 8.0.7
+
+## Comando de Migracion
+
+dotnet ef migrations add PrimeraMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
+
+dotnet ef database update
+
+## SOLO en Caso no tengas instalado el EF
+
+dotnet tool install --global dotnet-ef
