@@ -7,18 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using apptienda.Models;
+using apptienda.Data;
 
 namespace apptienda.Controllers
 {
-     public class CustomerController : Controller
+    public class CustomerController : Controller
     {
         private readonly ILogger<CustomerController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public CustomerController(ILogger<CustomerController> logger,UserManager<IdentityUser> userManager)
+        public CustomerController(ILogger<CustomerController> logger, UserManager<IdentityUser> userManager, ApplicationDbContext context)
         {
             _logger = logger;
             _userManager = userManager;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -31,10 +34,11 @@ namespace apptienda.Controllers
 
         public IActionResult RegistrarInfo(Customer customer)
         {
-             _logger.LogInformation("RegistrarInfo {1}", customer);
+            _logger.LogInformation("RegistrarInfo {1}", customer);
             if (ModelState.IsValid)
             {
-                
+                _context.DbSetCustomer.Add(customer);
+                _context.SaveChanges();
                 ViewData["Message"] = "Se registró los datos del cliente";
             }
             return View("Index");
