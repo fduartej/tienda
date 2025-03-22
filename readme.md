@@ -39,3 +39,5 @@ dotnet tool install --global dotnet-ef
 ## Nueva Migracion
 
 dotnet ef migrations add CustomerMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
+
+dotnet ef migrations add ProductoMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
