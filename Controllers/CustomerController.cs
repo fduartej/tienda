@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using apptienda.Models;
 using apptienda.Data;
+using apptienda.Helpers;
 
 namespace apptienda.Controllers
 {
@@ -37,6 +38,9 @@ namespace apptienda.Controllers
             _logger.LogInformation("RegistrarInfo {1}", customer);
             if (ModelState.IsValid)
             {
+                _logger.LogInformation("RegistrarInfo {1}", customer);
+                SessionExtension.Set<Customer>(HttpContext.Session, "CustomerSession", customer);
+
                 _context.DbSetCustomer.Add(customer);
                 _context.SaveChanges();
                 ViewData["Message"] = "Se registró los datos del cliente";

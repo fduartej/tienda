@@ -1,6 +1,33 @@
-﻿@{
+﻿@model apptienda.Models.Customer;
+
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+@if (Model != null)
+{
+    <h2>Hola @Model.UserName</h2>
+}
+else
+{
+    <p>No hay sesión activa.</p>
+}
+
+<h1>Peek Contacts</h1>
+
+@{
+    if (TempData.Peek("Message") != null)
+    {
+        <h3>Message: @TempData.Peek("Message")</h3>
+    }
+}
+
+
+
+
+
+
+
