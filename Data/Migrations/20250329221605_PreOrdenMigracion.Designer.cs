@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using apptienda.Data;
 
@@ -10,9 +11,11 @@ using apptienda.Data;
 namespace apptienda.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250329221605_PreOrdenMigracion")]
+    partial class PreOrdenMigracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -348,35 +351,6 @@ namespace apptienda.Data.Migrations
                     b.ToTable("t_pago");
                 });
 
-            modelBuilder.Entity("apptienda.Models.PreOrden", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Precio")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("ProductoId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("t_preorden");
-                });
-
             modelBuilder.Entity("apptienda.Models.Producto", b =>
                 {
                     b.Property<int>("Id")
@@ -476,15 +450,6 @@ namespace apptienda.Data.Migrations
                         .HasForeignKey("OrdenId");
 
                     b.Navigation("Orden");
-                });
-
-            modelBuilder.Entity("apptienda.Models.PreOrden", b =>
-                {
-                    b.HasOne("apptienda.Models.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId");
-
-                    b.Navigation("Producto");
                 });
 #pragma warning restore 612, 618
         }

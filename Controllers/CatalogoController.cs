@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using apptienda.Data;
+using apptienda.Models;
 
 namespace apptienda.Controllers
 {
@@ -27,6 +28,16 @@ namespace apptienda.Controllers
             var productos = _context.DbSetProducto.ToList();
             _logger.LogInformation("Productos: {0}", productos);
             return View(productos);
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            Producto objProduct = await _context.DbSetProducto.FindAsync(id);
+            if (objProduct == null)
+            {
+                return NotFound();
+            }
+            return View(objProduct);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
