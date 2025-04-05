@@ -15,7 +15,7 @@ namespace apptienda.Models
 
         public DateTime Fecha { get; set; }
 
-        public Pago? pago { get; set; }
+        public Pago? Pago { get; set; }
 
 
         public string? Status { get; set; }

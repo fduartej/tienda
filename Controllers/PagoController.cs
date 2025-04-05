@@ -52,7 +52,7 @@ namespace apptienda.Controllers
             Orden pedido = new Orden();
             pedido.UserName = pago.UserName;
             pedido.Total = pago.MontoTotal;
-            pedido.pago = pago;
+            pedido.Pago = pago;
             pedido.Status = "PENDIENTE";
             _context.Add(pedido);
 
@@ -60,7 +60,7 @@ namespace apptienda.Controllers
             foreach (var item in itemsCarrito.ToList())
             {
                 DetalleOrden detallePedido = new DetalleOrden();
-                detallePedido.orden = pedido;
+                detallePedido.Orden = pedido;
                 detallePedido.Precio = item.Precio;
                 detallePedido.Producto = item.Producto;
                 detallePedido.Cantidad = item.Cantidad;
@@ -76,6 +76,9 @@ namespace apptienda.Controllers
             }
 
             _context.UpdateRange(itemsCarrito);
+
+            pago.Status = "CANCELADO";
+            _context.Update(pago);
 
             _context.SaveChanges();
 

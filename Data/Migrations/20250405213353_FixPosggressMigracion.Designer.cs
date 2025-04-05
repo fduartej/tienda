@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using apptienda.Data;
@@ -11,9 +12,11 @@ using apptienda.Data;
 namespace apptienda.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250405213353_FixPosggressMigracion")]
+    partial class FixPosggressMigracion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,9 +319,6 @@ namespace apptienda.Data.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("PagoId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Status")
                         .HasColumnType("text");
 
@@ -328,9 +328,12 @@ namespace apptienda.Data.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("text");
 
+                    b.Property<int?>("pagoId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PagoId");
+                    b.HasIndex("pagoId");
 
                     b.ToTable("t_order");
                 });
@@ -494,11 +497,11 @@ namespace apptienda.Data.Migrations
 
             modelBuilder.Entity("apptienda.Models.Orden", b =>
                 {
-                    b.HasOne("apptienda.Models.Pago", "Pago")
+                    b.HasOne("apptienda.Models.Pago", "pago")
                         .WithMany()
-                        .HasForeignKey("PagoId");
+                        .HasForeignKey("pagoId");
 
-                    b.Navigation("Pago");
+                    b.Navigation("pago");
                 });
 
             modelBuilder.Entity("apptienda.Models.PreOrden", b =>
