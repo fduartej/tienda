@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using apptienda.Data;
 using apptienda.Models;
+using System.Text.Json;
 
 namespace apptienda.Controllers
 {
@@ -33,10 +34,18 @@ namespace apptienda.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             var itemsPedido = from o in _context.DbSetDetalleOrden select o;
+
             itemsPedido = itemsPedido.
                 Include(p => p.Producto).
+                Include(p => p.Orden).
                 Where(s => s.Id.Equals(id));
-            return View(await itemsPedido.ToListAsync());
+
+            var itemsList = await itemsPedido.ToListAsync();
+            var itemsJson = JsonSerializer.Serialize(itemsList);
+            _logger.LogInformation("Items en JSON: {json}", itemsJson);
+
+
+            return View(itemsList);
 
         }
 
