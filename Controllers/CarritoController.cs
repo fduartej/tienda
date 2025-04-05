@@ -12,6 +12,7 @@ using apptienda.Data;
 using apptienda.Helpers;
 using System.Dynamic;
 
+
 namespace apptienda.Controllers
 {
     public class CarritoController : Controller
@@ -72,6 +73,69 @@ namespace apptienda.Controllers
                 _logger.LogInformation("Se agrego un producto al carrito");
                 return RedirectToAction("Index", "Catalogo");
             }
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var preorden = await _context.DbSetPreOrden.FindAsync(id);
+            if (preorden != null)
+            {
+                _context.DbSetPreOrden.Remove(preorden);
+                await _context.SaveChangesAsync();
+                ViewData["Message"] = "Se elimino del carrito";
+                _logger.LogInformation("Se elimino un producto del carrito");
+            }
+            return RedirectToAction("Index", "Carrito");
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var itemPreOrden = await _context.DbSetPreOrden.FindAsync(id);
+            if (itemPreOrden == null)
+            {
+                return NotFound();
+            }
+            return View(itemPreOrden);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Cantidad,Precio,UserID")] PreOrden itemCarrito)
+        {
+            if (id != itemCarrito.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(itemCarrito);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.DbSetPreOrden.Any(e => e.Id == id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(itemCarrito);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
