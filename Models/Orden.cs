@@ -9,11 +9,14 @@ namespace apptienda.Models
         [Column("id")]
         public int Id { get; set; }
 
-        public string? UserID { get; set; }
+        public string? UserName { get; set; }
 
         public Decimal Total { get; set; }
 
         public DateTime Fecha { get; set; }
+
+        public Pago? pago { get; set; }
+
 
         public string? Status { get; set; }
     }

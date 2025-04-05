@@ -39,7 +39,7 @@ namespace apptienda.Controllers
             }
             var items = from o in _context.DbSetPreOrden select o;
             items = items.Include(p => p.Producto).
-                    Where(w => w.UserID.Equals(userIDSession) &&
+                    Where(w => w.UserName.Equals(userIDSession) &&
                         w.Status.Equals("PENDIENTE"));
             var itemsCarrito = items.ToList();
             var total = itemsCarrito.Sum(c => c.Cantidad * c.Precio);
@@ -66,7 +66,7 @@ namespace apptienda.Controllers
                 proforma.Producto = producto;
                 proforma.Precio = producto.Price;
                 proforma.Cantidad = 1;
-                proforma.UserID = userID;
+                proforma.UserName = userID;
                 _context.Add(proforma);
                 await _context.SaveChangesAsync();
                 ViewData["Message"] = "Se Agrego al carrito";

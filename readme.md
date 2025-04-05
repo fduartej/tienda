@@ -63,3 +63,5 @@ Driver de Postgress
 4. borrar las migraciones
 
 dotnet ef migrations add PostgressMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
+
+dotnet ef migrations add FixPostgressMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
