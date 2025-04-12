@@ -39,6 +39,16 @@ namespace apptienda.Controllers
             if (ModelState.IsValid)
             {
                 _logger.LogInformation("RegistrarInfo {1}", customer);
+                // Convert BirthDate to UTC
+                if (customer.BirthDate.Kind == DateTimeKind.Unspecified)
+                {
+                    customer.BirthDate = DateTime.SpecifyKind(customer.BirthDate, DateTimeKind.Utc);
+                }
+                else if (customer.BirthDate.Kind == DateTimeKind.Local)
+                {
+                    customer.BirthDate = customer.BirthDate.ToUniversalTime();
+                }
+
                 SessionExtension.Set<Customer>(HttpContext.Session, "CustomerSession", customer);
 
                 _context.DbSetCustomer.Add(customer);

@@ -7,7 +7,7 @@
 
 <p>Use this page to detail your site's privacy policy.</p>
 
-@if (Model != null)
+@if (Model != null && !string.IsNullOrEmpty(Model.UserName))
 {
     <h2>Hola @Model.UserName</h2>
 }

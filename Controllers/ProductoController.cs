@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using apptienda.Data;
 using apptienda.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace apptienda.Controllers
 {
+    [Authorize(Roles = "admin,owner")]
     public class ProductoController : Controller
     {
         private readonly ApplicationDbContext _context;

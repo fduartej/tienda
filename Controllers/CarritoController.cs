@@ -11,7 +11,7 @@ using apptienda.Models;
 using apptienda.Data;
 using apptienda.Helpers;
 using System.Dynamic;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace apptienda.Controllers
 {
@@ -50,6 +50,7 @@ namespace apptienda.Controllers
             return View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> Add(int? id)
         {
             var userID = _userManager.GetUserName(User);

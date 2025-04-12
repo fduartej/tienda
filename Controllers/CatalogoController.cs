@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using apptienda.Data;
 using apptienda.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace apptienda.Controllers
 {
@@ -22,7 +23,7 @@ namespace apptienda.Controllers
             _context = context;
         }
 
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var productos = _context.DbSetProducto.ToList();
@@ -30,6 +31,7 @@ namespace apptienda.Controllers
             return View(productos);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             Producto objProduct = await _context.DbSetProducto.FindAsync(id);

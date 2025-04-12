@@ -9,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using apptienda.Data;
 using apptienda.Models;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace apptienda.Controllers
 {
 
+    [Authorize(Roles = "owner")]
     public class PedidoController : Controller
     {
         private readonly ILogger<PedidoController> _logger;
