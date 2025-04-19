@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using apptienda.Data;
 using Microsoft.OpenApi.Models;
+using apptienda.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
   .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+//Registro mi logica customizada y reuzable
+builder.Services.AddScoped<ProductoService, ProductoService>();
 
 // API Documentation
 builder.Services.AddEndpointsApiExplorer();

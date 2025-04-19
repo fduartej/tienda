@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using apptienda.Data;
 using apptienda.Models;
 using Microsoft.AspNetCore.Authorization;
+using apptienda.Service;
 
 namespace apptienda.Controllers
 {
@@ -15,16 +16,22 @@ namespace apptienda.Controllers
     public class ProductoController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ProductoService _productoService;
 
-        public ProductoController(ApplicationDbContext context)
+        public ProductoController(ApplicationDbContext context,
+            ProductoService productoService)
         {
             _context = context;
+            _productoService = productoService;
         }
 
         // GET: Producto
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DbSetProducto.ToListAsync());
+            var productos = await _productoService.GetAll();
+            return productos != null ?
+                        View(productos) :
+                        Problem("Entity set 'ApplicationDbContext.DataProductos'  is null.");
         }
 
         // GET: Producto/Details/5
