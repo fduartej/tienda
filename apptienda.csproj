@@ -23,6 +23,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
     
   </ItemGroup>
 
