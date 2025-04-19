@@ -1,2 +1,9 @@
 GET http://localhost:5209/api/producto HTTP/1.1
 Accept: application/json
+
+
+GET https://currency-exchange.p.rapidapi.com/exchange?from=SGD&to=MYR&q=1.0 HTTP/1.1
+Accept: application/json
+x-rapidapi-host: currency-exchange.p.rapidapi.com
+x-rapidapi-key: 0480f8b7a5mshe85c70b898a64c9p12b6eajsn98b3968305bb
+

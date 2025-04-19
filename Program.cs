@@ -4,6 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using apptienda.Data;
 using Microsoft.OpenApi.Models;
 using apptienda.Service;
+using apptienda.Integration.Exchange;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,10 @@ builder.Services.AddControllersWithViews();
 
 //Registro mi logica customizada y reuzable
 builder.Services.AddScoped<ProductoService, ProductoService>();
+
+
+//Registro las integraciones
+builder.Services.AddScoped<ExchangeIntegration, ExchangeIntegration>();
 
 // API Documentation
 builder.Services.AddEndpointsApiExplorer();
