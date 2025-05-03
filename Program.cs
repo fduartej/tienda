@@ -48,6 +48,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+
+// Permitir CORS para todos los orígenes
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirTodos", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -78,6 +90,8 @@ app.UseRouting();
 app.UseSession();
 
 app.UseAuthorization();
+
+app.UseCors("PermitirTodos");
 
 app.MapControllerRoute(
     name: "default",
