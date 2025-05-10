@@ -73,3 +73,5 @@ dotnet ef migrations add FixPostgressMigracion --context apptienda.Data.Applicat
 dotnet aspnet-codegenerator controller -name ProductoController -m Producto -dc apptienda.Data.ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
 
 dotnet ef migrations add Fix2PosggressMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
+
+dotnet ef migrations add MLContactMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"

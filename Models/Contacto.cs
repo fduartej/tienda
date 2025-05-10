@@ -16,5 +16,12 @@ namespace apptienda.Models
         public string? Email { get; set; }
         [NotNull]
         public string? Mensaje { get; set; }
+
+        public string? Etiqueta { get; set; }
+
+        public float Puntuacion { get; set; }
+
+
+
     }
 }
