@@ -20,5 +20,9 @@ namespace apptienda.Models
         public string? Status { get; set; }
         public string? UserName { get; set; }
 
+        public string? DNI { get; set; }
+        public string? Email { get; set; }
+
+        public int? Cuotas { get; set; }
     }
 }

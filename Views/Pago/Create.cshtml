@@ -42,6 +42,31 @@
                   <input asp-for="Cvv" class="form-control" data-inputmask="'mask': '999', 'placeholder': '999'" />
                 </div>
               </div>
+              <div class="form-group row"></div>
+                <div class="col-sm-2">
+                  <label asp-for="DNI" class="control-label"></label>
+                </div>
+                <div class="col-sm-2">
+                  <input asp-for="DNI" class="form-control" data-inputmask="'mask': '99999999', 'placeholder': '99999999'" />
+                </div>
+              </div>
+              <div class="form-group row"></div>
+                <div class="col-sm-2">
+                  <label asp-for="Email" class="control-label"></label>
+                </div>
+                <div class="col-sm-2">
+                  <input asp-for="Email" class="form-control" type="email"  />
+                  <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+              </div>
+              <div class="form-group row"></div>
+                <div class="col-sm-2">
+                  <label asp-for="Cuotas" class="control-label"></label>
+                </div>
+                <div class="col-sm-2">
+                  <input asp-for="Cuotas" class="form-control" data-inputmask="'mask': '9', 'placeholder': '9'" />
+                </div>
+              </div>              
               <div class="form-group row">
                 <div class="col-sm-2">
                   <label asp-for="MontoTotal" class="control-label"></label>
@@ -61,3 +86,61 @@
           </div>
         </div>
     </div>
+
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+    const mp = new MercadoPago('TU_PUBLIC_KEY', {
+        locale: 'es-PE'
+    });
+
+    const cardForm = mp.cardForm({
+        amount: { id: "MontoTotal" }
+        autoMount: true,
+        form: {
+            id: "form-pago",
+            cardholderName: { id: "NombreTarjeta" },
+            cardNumber: { id: "NumeroTarjeta" },
+            expirationDate: { id: "DueDateYYMM" },
+            securityCode: { id: "Cvv" },
+            installments: { id: "cuotas" },
+            identificationType: "DNI",
+            identificationNumber: { id: "DNI" },
+            cardholderEmail: { id: "Email" }
+        },
+        callbacks: {
+            onFormMounted: error => {
+                if (error) {
+                    alert("Error al montar el formulario: " + error.message);
+                }
+            },
+            onSubmit: event => {
+                event.preventDefault();
+
+                const data = cardForm.getCardFormData();
+
+                fetch('/Pago/ProcesarPago', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        token: data.token,
+                        paymentMethodId: data.paymentMethodId,
+                        issuerId: data.issuerId,
+                        installments: data.installments,
+                        email: data.cardholderEmail,
+                        amount: data.amount,
+                        identificationType: data.identificationType,
+                        identificationNumber: data.identificationNumber
+                    })
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.status === "approved") {
+                        alert("Pago aprobado!");
+                    } else {
+                        alert("Pago fallido: " + result.status_detail);
+                    }
+                });
+            }
+        }
+    });
+</script>
