@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using apptienda.Data;
 using apptienda.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using apptienda.Data;
 
 namespace apptienda.Controllers
 {
@@ -41,6 +43,8 @@ namespace apptienda.Controllers
             }
             return View(objProduct);
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

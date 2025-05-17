@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace apptienda.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class PrimeraMigracion : Migration
+    public partial class InitialMigracion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -268,6 +268,27 @@ namespace apptienda.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "t_rating",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: true),
+                    ProductId = table.Column<int>(type: "INTEGER", nullable: true),
+                    RatingValue = table.Column<int>(type: "INTEGER", nullable: false),
+                    FechaRating = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_t_rating", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_t_rating_t_producto_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "t_producto",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "t_order_detail",
                 columns: table => new
                 {
@@ -349,6 +370,11 @@ namespace apptienda.Data.Migrations
                 name: "IX_t_preorden_ProductoId",
                 table: "t_preorden",
                 column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_t_rating_ProductId",
+                table: "t_rating",
+                column: "ProductId");
         }
 
         /// <inheritdoc />
@@ -380,6 +406,9 @@ namespace apptienda.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "t_preorden");
+
+            migrationBuilder.DropTable(
+                name: "t_rating");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

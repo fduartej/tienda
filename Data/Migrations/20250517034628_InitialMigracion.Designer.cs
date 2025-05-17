@@ -11,8 +11,8 @@ using apptienda.Data;
 namespace apptienda.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250510204231_PrimeraMigracion")]
-    partial class PrimeraMigracion
+    [Migration("20250517034628_InitialMigracion")]
+    partial class InitialMigracion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -412,6 +412,31 @@ namespace apptienda.Data.Migrations
                     b.ToTable("t_producto");
                 });
 
+            modelBuilder.Entity("apptienda.Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("FechaRating")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RatingValue")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("t_rating");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -494,6 +519,15 @@ namespace apptienda.Data.Migrations
                         .HasForeignKey("ProductoId");
 
                     b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("apptienda.Models.Rating", b =>
+                {
+                    b.HasOne("apptienda.Models.Producto", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

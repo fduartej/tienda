@@ -21,8 +21,21 @@
                 <div class="card-body">
                   <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
                   <p class="card-text">@Html.DisplayFor(modelItem => item.Price)</p>
+
                   <a class="btn btn-primary" asp-controller="Carrito" asp-action="Add" asp-route-id="@item.Id">Add</a>
                   <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">View</a>
+                  <div class="mb-2"></div>
+    <form class="rating-form" data-product="@item.Id" style="margin-bottom:10px;">
+        <input type="hidden" name="ProductId" value="@item.Id" />
+        <span>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <button type="button" class="star-btn"  name="RatingValue" value="@i" style="background:none;border:none;padding:0;">
+                    <span style="color: #ccc; font-size: 1.2em;">&#9733;</span>
+                </button>
+            }
+        </span>
+    </form>
                 </div>
               </div>
             </div>
@@ -32,3 +45,28 @@
       </div>
     </div>
   </div>
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.rating-form').forEach(function(form) {
+        form.addEventListener('click', function(e) {
+            if (e.target.closest('.star-btn')) {
+                e.preventDefault();
+                const btn = e.target.closest('.star-btn');
+                const value = btn.getAttribute('value');
+                const productId = form.getAttribute('data-product');
+                console.log('ProductId:', productId);
+                console.log('RatingValue:', value);
+                fetch('/Rating/Create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value
+                    },
+                    body: JSON.stringify({ ProductId: productId, RatingValue: value })
+                })
+                .then(res => res.ok ? alert('¡Gracias por tu calificación!') : alert('Error al calificar'));
+            }
+        });
+    });
+});
+</script>

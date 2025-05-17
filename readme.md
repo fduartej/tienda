@@ -75,3 +75,5 @@ dotnet aspnet-codegenerator controller -name ProductoController -m Producto -dc 
 dotnet ef migrations add Fix2PosggressMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
 
 dotnet ef migrations add MLContactMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
+
+dotnet ef migrations add RatingMigracion --context apptienda.Data.ApplicationDbContext -o "D:\Root\Code\usmp\20251\apptienda\Data\Migrations"
