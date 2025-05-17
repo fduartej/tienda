@@ -18,5 +18,7 @@ namespace apptienda.Models
         public string? Status { get; set; }
         [NotNull]
         public string? ImageURL { get; set; }
+
+        public bool IsRecommended { get; set; } = false;
     }
 }

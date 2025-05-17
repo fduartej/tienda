@@ -8,6 +8,9 @@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Carrito" asp-action="Index">Carrito</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Recomendacion" asp-action="Index">Recomendados</a>
+    </li>
 
     @if (User.IsInRole("admin") || User.IsInRole("owner")) {
         <li class="nav-item">

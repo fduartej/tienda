@@ -15,7 +15,8 @@ namespace apptienda.Controllers
     public class RatingController : Controller
     {
 
-        private readonly ApplicationDbContext _context; private readonly ILogger<RatingController> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<RatingController> _logger;
 
         public RatingController(ILogger<RatingController> logger,
             ApplicationDbContext context)

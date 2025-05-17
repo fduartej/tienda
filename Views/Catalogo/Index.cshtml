@@ -54,8 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const btn = e.target.closest('.star-btn');
                 const value = btn.getAttribute('value');
                 const productId = form.getAttribute('data-product');
-                console.log('ProductId:', productId);
-                console.log('RatingValue:', value);
                 fetch('/Rating/Create', {
                     method: 'POST',
                     headers: {

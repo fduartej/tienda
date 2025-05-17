@@ -1,0 +1,74 @@
+@using apptienda.Models
+@{
+    ViewData["Title"] = "Recomendados";
+
+
+    var ProductosComprados = (List<Producto>)ViewData["productosComprados"];
+    var ProductRatings = (List<(int productId, float score)>) ViewData["ratings"];
+    var ProductoRecomendados = (List<Producto>)ViewData["GetProductRecomendados"];
+}
+
+<h1>Recien Comprados </h1>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div id="products" class="mb-3">
+          <div class="row">
+            @foreach (var item in ProductosComprados) {
+            <div class="col-sm-4">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="card-img-actions">
+                      <img src="@item.ImageURL" class="d-block w-100 image-fit">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                  <p class="card-text">@Html.DisplayFor(modelItem => item.Price)</p>
+                </div>
+              </div>
+            </div>
+            }
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <hr />
+<h1>Recomendados </h1>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div id="products" class="mb-3">
+          <div class="row">
+            @foreach (var item in ProductoRecomendados) {
+            <div class="col-sm-4">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="card-img-actions">
+                      <img src="@item.ImageURL" class="d-block w-100 image-fit">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                  <p class="card-text">@Html.DisplayFor(modelItem => item.Price)</p>
+                    @{
+                        foreach ((int productId, float normalizedScore) in ProductRatings)
+                        {
+                            if (productId == item.Id)
+                            {
+
+                                var formatted = normalizedScore.ToString("0.##\\%");
+                                <span class="glyphicon glyphicon-fire"></span>@formatted;
+                            }
+                        }
+                    }
+                </div>
+              </div>
+            </div>
+            }
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
