@@ -36,7 +36,7 @@ namespace apptienda.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _logger.LogInformation("UserId: {0}", userId);
             // Opcional: evitar que el usuario califique el mismo producto más de una vez
-            var existing = _context.DbSetRating.FirstOrDefault(r => r.Product.Id == input.ProductId && r.UserName == userId);
+            var existing = _context.DbSetRating.FirstOrDefault(r => r.Product.Id == input.ProductId && r.UserId == userId);
             _logger.LogInformation("Existing: {0}", existing);
             if (existing != null)
             {
@@ -49,7 +49,7 @@ namespace apptienda.Controllers
                 var rating = new Rating
                 {
                     Product = product,
-                    UserName = userId,
+                    UserId = userId,
                     RatingValue = input.RatingValue
                 };
                 _logger.LogInformation("Rating: {0}", rating);
