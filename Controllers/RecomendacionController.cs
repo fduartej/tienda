@@ -32,6 +32,7 @@ namespace apptienda.Controllers
                 return Unauthorized();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Console.WriteLine("User ID: " + userId);
             List<(int productId, float normalizedScore)> ratings = new List<(int productId, float normalizedScore)>();
             var userRatings = _context.DbSetRating
                 .Where(r => r.UserId == userId)
@@ -54,8 +55,9 @@ namespace apptienda.Controllers
                 };
                 //Load model and predict output
                 var prediction = MLModelRecomendation.Predict(sampleData);
-
+                Console.WriteLine($"Producto: {producto.Name}, Score: {prediction.Score}");
                 float normalizedscore = Sigmoid(prediction.Score);
+                Console.WriteLine($"Normalized Score: {normalizedscore}");
                 ratings.Add((producto.Id, normalizedscore));
             }
 

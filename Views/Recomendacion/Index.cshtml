@@ -57,8 +57,16 @@
                         {
                             if (productId == item.Id)
                             {
-
-                                var formatted = normalizedScore.ToString("0.##\\%");
+                                string formatted;
+                                Console.WriteLine("Normalized Score: " + normalizedScore);
+                                if (float.IsNaN(normalizedScore) || float.IsInfinity(normalizedScore))
+                                {
+                                    formatted = "0%";
+                                }
+                                else
+                                {
+                                    formatted = normalizedScore.ToString("0.##") + "%";
+                                }
                                 <span class="glyphicon glyphicon-fire"></span>@formatted;
                             }
                         }
