@@ -55,8 +55,8 @@ namespace apptienda.ML
 
         private static string MLNetModelPath = Path.GetFullPath("./ML/RecomendationMatrix/MLModelRecomendation.mlnet");
 
-        public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
-
+        private static readonly object _engineLock = new object();
+        private static PredictionEngine<ModelInput, ModelOutput> _predictEngine;
 
         private static PredictionEngine<ModelInput, ModelOutput> CreatePredictEngine()
         {
@@ -66,14 +66,34 @@ namespace apptienda.ML
         }
 
         /// <summary>
+        /// Reloads the prediction engine from the saved .mlnet file.
+        /// Call this after retraining the model.
+        /// </summary>
+        public static void ReloadModel()
+        {
+            lock (_engineLock)
+            {
+                _predictEngine?.Dispose();
+                _predictEngine = CreatePredictEngine();
+            }
+        }
+
+        /// <summary>
         /// Use this method to predict on <see cref="ModelInput"/>.
         /// </summary>
         /// <param name="input">model input.</param>
         /// <returns><seealso cref=" ModelOutput"/></returns>
         public static ModelOutput Predict(ModelInput input)
         {
-            var predEngine = PredictEngine.Value;
-            return predEngine.Predict(input);
+            if (_predictEngine == null)
+            {
+                lock (_engineLock)
+                {
+                    if (_predictEngine == null)
+                        _predictEngine = CreatePredictEngine();
+                }
+            }
+            return _predictEngine.Predict(input);
         }
     }
 }

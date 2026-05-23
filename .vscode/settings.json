@@ -1,0 +1,12 @@
+{
+  "snyk.advanced.autoSelectOrganization": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "tienda",
+      "database": "${workspaceFolder:tienda}/app.db"
+    }
+  ],
+  "sqltools.useNodeRuntime": true
+}

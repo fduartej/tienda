@@ -29,6 +29,31 @@ namespace apptienda.Controllers
             return View();
         }
 
+        public IActionResult Dashboard()
+        {
+            var ultimos30 = _context.DbSetContactos
+                .OrderByDescending(c => c.Id)
+                .Take(30)
+                .ToList();
+
+            int positivos = ultimos30.Count(c => c.Etiqueta == "Positivo");
+            int negativos = ultimos30.Count(c => c.Etiqueta == "Negativo");
+            float promedioPositivo = positivos > 0
+                ? ultimos30.Where(c => c.Etiqueta == "Positivo").Average(c => c.Puntuacion)
+                : 0f;
+            float promedioNegativo = negativos > 0
+                ? ultimos30.Where(c => c.Etiqueta == "Negativo").Average(c => c.Puntuacion)
+                : 0f;
+
+            ViewData["Comentarios"] = ultimos30;
+            ViewData["Positivos"] = positivos;
+            ViewData["Negativos"] = negativos;
+            ViewData["PromedioPositivo"] = promedioPositivo;
+            ViewData["PromedioNegativo"] = promedioNegativo;
+
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Registrar(Contacto contacto)
         {

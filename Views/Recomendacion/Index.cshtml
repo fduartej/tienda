@@ -8,6 +8,20 @@
     var ProductoRecomendados = (List<Producto>)ViewData["GetProductRecomendados"];
 }
 
+@if (TempData["RetrainMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["RetrainMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<form asp-action="Retrain" method="post" class="mb-3">
+    <button type="submit" class="btn btn-warning">
+        &#128260; Reentrenar modelo con datos reales
+    </button>
+</form>
+
 <h1>Recien Comprados </h1>
   <div class="container">
     <div class="row">
